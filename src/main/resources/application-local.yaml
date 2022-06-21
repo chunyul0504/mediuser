@@ -1,0 +1,44 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost:3306/medical
+    username: root
+    password: wheein0417*
+    hikari:
+      pool-name: hikari-cp
+      maximum-pool-size: 10
+      max-lifetime: 55000
+      auto-commit: false
+      connection-test-query: SELECT 1
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
+    properties:
+      hibernate:
+        show-sql: true
+        format_sql: true
+        ddl-auto: none
+
+logging:
+  level:
+    root: info
+    com:
+      zaxxer:
+        hikari: info
+    jdbc:
+      resultset: debug
+      resultsettable: debug
+      audit: debug
+      sqltiming: debug
+      connection: debug
+    org.hibernate:
+      type: off
+#      SQL: info
+      SQL: debug
+    org.springframework.web: info
+    javax.sql.DataSource: debug
+    log4jdbc.log4j2: off
