@@ -1,4 +1,4 @@
-package com.blue.mediuser.config;
+package com.blue.mediuser.common.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;

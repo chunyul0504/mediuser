@@ -1,4 +1,4 @@
-package com.blue.mediuser.util;
+package com.blue.mediuser.common.util;
 
 // 세션 붙이고 지워야하는 클래스
 public class TestSession {

@@ -1,4 +1,4 @@
-package com.blue.mediuser.util;
+package com.blue.mediuser.common.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

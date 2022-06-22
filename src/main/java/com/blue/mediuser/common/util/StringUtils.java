@@ -1,4 +1,4 @@
-package com.blue.mediuser.util;
+package com.blue.mediuser.common.util;
 
 import lombok.extern.slf4j.Slf4j;
 

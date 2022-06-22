@@ -2,9 +2,9 @@ package com.blue.mediuser.admin;
 
 import com.blue.mediuser.admin.domain.dto.AdminMenuAuthorityDto;
 import com.blue.mediuser.admin.domain.entity.AdminMenuAuthority;
-import com.blue.mediuser.util.ApiListResponse;
-import com.blue.mediuser.util.ApiResponse;
-import com.blue.mediuser.util.TestSession;
+import com.blue.mediuser.common.util.ApiListResponse;
+import com.blue.mediuser.common.util.ApiResponse;
+import com.blue.mediuser.common.util.TestSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

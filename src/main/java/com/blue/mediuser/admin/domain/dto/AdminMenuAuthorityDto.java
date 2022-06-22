@@ -1,7 +1,7 @@
 package com.blue.mediuser.admin.domain.dto;
 
 import com.blue.mediuser.admin.domain.entity.AdminMenuAuthority;
-import com.blue.mediuser.util.StringUtils;
+import com.blue.mediuser.common.util.StringUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
