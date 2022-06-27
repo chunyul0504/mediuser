@@ -1,9 +1,11 @@
 package com.blue.mediuser.buyer.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @NoArgsConstructor
+@DynamicUpdate
 @Table(name = "BUYER")
 public class Buyer {
 

@@ -4,6 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * buyer admin controller
+ */
 @Slf4j
 @RestController
 @RequestMapping("/buyer")
@@ -14,4 +17,6 @@ public class BuyerAdminController {
     public BuyerAdminController(BuyerAdminService buyerAdminService) {
         this.buyerAdminService = buyerAdminService;
     }
+
+
 }

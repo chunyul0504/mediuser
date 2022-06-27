@@ -2,6 +2,7 @@ package com.blue.mediuser.buyer.domain.dto;
 
 import com.blue.mediuser.buyer.domain.entity.Buyer;
 import com.blue.mediuser.buyer.domain.entity.BuyerIdentification;
+import com.blue.mediuser.common.constants.IdentificationTypeEnum;
 import com.blue.mediuser.common.constants.UserTypeConstants;
 import com.blue.mediuser.common.util.DateFormatUtils;
 import com.blue.mediuser.common.util.TestSession;
@@ -11,6 +12,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -32,7 +34,7 @@ public class BuyerIdentificationDto {
     private LocalDateTime createdDatetime;
     private LocalDateTime modifiedDatetime;
 
-    @Builder
+    @Builder(builderClassName = "createDto", builderMethodName = "createDto")
     public BuyerIdentificationDto(Long seq, BuyerDto buyer, String buyerIdentificationCode, String identificationType, String id, String password, String staffName, String staffTelNo, String staffPhoneNo, String staffEmail, String createdId, String modifiedId, LocalDateTime createdDatetime, LocalDateTime modifiedDatetime) {
         this.seq = seq;
         this.buyer = buyer;
@@ -50,9 +52,9 @@ public class BuyerIdentificationDto {
         this.modifiedDatetime = modifiedDatetime;
     }
 
-    public BuyerIdentificationDto(BuyerIdentification buyerIdentification) {
+    @Builder(builderClassName = "entityByDto", builderMethodName = "entityByDto")
+    public BuyerIdentificationDto(BuyerIdentification buyerIdentification, IdentificationTypeEnum ite) {
         this.seq = buyerIdentification.getSeq();
-        this.buyer = new BuyerDto(buyerIdentification.getBuyer());
         this.buyerIdentificationCode = buyerIdentification.getBuyerIdentificationCode();
         this.identificationType = buyerIdentification.getIdentificationType();
         this.id = buyerIdentification.getId();
@@ -62,14 +64,17 @@ public class BuyerIdentificationDto {
         this.staffPhoneNo = buyerIdentification.getStaffPhoneNo();
         this.createdId = buyerIdentification.getCreatedId();
         this.createdDatetime = buyerIdentification.getCreatedDatetime();
+        if(Objects.equals(IdentificationTypeEnum.MAIN.getCode(), ite.getCode())){
+            this.buyer = BuyerDto.entityByDto().buyer(buyerIdentification.getBuyer()).build();
+        }
     }
 
-    public BuyerIdentification insertEntity() {
+    public BuyerIdentification insertEntity(String identificationType) {
         return BuyerIdentification
                 .builder()
                 .buyer(Buyer.builder().seq(this.buyer.getSeq()).build())
                 .buyerIdentificationCode(UserTypeConstants.BUYER + LocalDateTime.now().format(DateFormatUtils.DATETIME_CODE))
-                .identificationType(this.identificationType) // TODO. 코드타입 상수 M: 메인 계정, P: 부계정
+                .identificationType(identificationType) // TODO. 코드타입 상수 M: 메인 계정, P: 부계정
                 .id(this.id)
                 .password(this.password) // TODO.암호화
                 .staffName(this.staffName)
@@ -78,6 +83,26 @@ public class BuyerIdentificationDto {
                 .staffEmail(this.staffEmail)
                 .createdId(TestSession.id)
                 .createdDatetime(LocalDateTime.now())
+                .build();
+    }
+
+    public BuyerIdentification updateEntity(BuyerIdentificationDto biDtoParam) {
+        return BuyerIdentification
+                .builder()
+                .seq(this.seq)
+                .buyer(this.buyer.updateEntity(biDtoParam.getBuyer()))
+                .buyerIdentificationCode(this.buyerIdentificationCode)
+                .identificationType(this.identificationType) // TODO. 코드타입 상수 M: 메인 계정, P: 부계정
+                .id(this.id)
+                .password(this.password) // TODO.암호화
+                .staffName(biDtoParam.getStaffName())
+                .staffTelNo(biDtoParam.getStaffTelNo())
+                .staffPhoneNo(biDtoParam.getStaffPhoneNo())
+                .staffEmail(biDtoParam.getStaffEmail())
+                .createdId(this.createdId)
+                .createdDatetime(this.createdDatetime)
+                .modifiedId(TestSession.id)
+                .modifiedDatetime(LocalDateTime.now())
                 .build();
     }
 

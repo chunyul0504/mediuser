@@ -34,7 +34,7 @@ public class BuyerDto {
     private LocalDateTime createdDatetime;
     private LocalDateTime modifiedDatetime;
 
-    @Builder
+    @Builder(builderClassName = "createDto", builderMethodName = "createDto")
     public BuyerDto(Long seq, String buyerCode, String buyerType, String buyerState, String corpTelNo, String corpPhoneNo, String corpEmail, String corpName, String corpAddress, String corpShippingAddress, String businessRegistrationPath, String buyerTypeFilePath, String ci, String createdId, String modifiedId, LocalDateTime createdDatetime, LocalDateTime modifiedDatetime) {
         this.seq = seq;
         this.buyerCode = buyerCode;
@@ -55,6 +55,7 @@ public class BuyerDto {
         this.modifiedDatetime = modifiedDatetime;
     }
 
+    @Builder(builderClassName = "entityByDto", builderMethodName = "entityByDto")
     public BuyerDto(Buyer buyer){
         this.seq = buyer.getSeq();
         this.buyerCode = buyer.getBuyerCode();
@@ -75,19 +76,24 @@ public class BuyerDto {
         this.modifiedDatetime = buyer.getModifiedDatetime();
     }
 
-    public Buyer updateEntity(Buyer buyer){
+    public Buyer updateEntity(BuyerDto buyerParam){
         return Buyer
                 .builder()
+                .seq(this.seq)
+                .buyerCode(this.buyerCode)
+                .buyerType(this.buyerType)
                 .buyerState("M") // TODO. 코드타입 상수 R: 가입승인대기, M: 정보변경승인대기, D: 승인완료
-                .corpTelNo(buyer.getCorpTelNo())
-                .corpPhoneNo(buyer.getCorpPhoneNo())
-                .corpEmail(buyer.getCorpEmail())
-                .corpName(buyer.getCorpName())
-                .corpAddress(buyer.getCorpAddress())
-                .corpShippingAddress(buyer.getCorpShippingAddress())
-                .businessRegistrationPath(buyer.getBusinessRegistrationPath()) // TODO. 파일 저장 경로
-                .buyerTypeFilePath(buyer.getBuyerTypeFilePath()) // TODO. 파일 저장 경로
-                .ci(null) // TODO. 추후 인증 수단 붙을 수 있음.
+                .corpTelNo(buyerParam.getCorpTelNo())
+                .corpPhoneNo(buyerParam.getCorpPhoneNo())
+                .corpEmail(buyerParam.getCorpEmail())
+                .corpName(buyerParam.getCorpName())
+                .corpAddress(buyerParam.getCorpAddress())
+                .corpShippingAddress(buyerParam.getCorpShippingAddress())
+                .businessRegistrationPath(buyerParam.getBusinessRegistrationPath()) // TODO. 파일 저장 경로
+                .buyerTypeFilePath(buyerParam.getBuyerTypeFilePath()) // TODO. 파일 저장 경로
+                .ci(null) // TODO. 추후 인증 수단 붙을 수 있음. 일단은 null 처리
+                .createdId(this.createdId)
+                .createdDatetime(this.createdDatetime)
                 .modifiedId(TestSession.id)
                 .modifiedDatetime(LocalDateTime.now())
                 .build();

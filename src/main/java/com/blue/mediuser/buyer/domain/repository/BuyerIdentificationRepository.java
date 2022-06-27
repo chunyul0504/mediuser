@@ -8,5 +8,8 @@ import java.util.List;
 
 @Repository
 public interface BuyerIdentificationRepository extends JpaRepository<BuyerIdentification, Long> {
-    List<BuyerIdentification> findByBuyerSeqAndIdentificationType(Long buyerSeq, String identificationType);
+    BuyerIdentification findByBuyerSeqAndIdentificationType(Long buyerSeq, String identificationType);
+
+    List<BuyerIdentification> findAllByBuyerSeqOrderBySeqDesc(Long buyerSeq);
+
 }

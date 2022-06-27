@@ -8,13 +8,13 @@ import com.blue.mediuser.buyer.domain.repository.BuyerIdentificationRepository;
 import com.blue.mediuser.buyer.domain.repository.BuyerIdentificationRepositorySupport;
 import com.blue.mediuser.buyer.domain.repository.BuyerRepository;
 import com.blue.mediuser.buyer.sub.BuyerSubService;
+import com.blue.mediuser.common.constants.IdentificationTypeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -33,19 +33,29 @@ public class BuyerService {
         this.buyerSubService = buyerSubService;
     }
 
-    private Long addBuyer(BuyerDto buyerDto){
-        return  buyerRepository.save(buyerDto.insertEntity()).getSeq();
+    private Long addBuyer(BuyerDto buyerDto) {
+        return buyerRepository.save(buyerDto.insertEntity()).getSeq();
     }
 
-    public List<BuyerIdentification> getBuyerInfo(Long buyerSeq){
-        List<BuyerIdentification> buyerIdentificationList = buyerIdentificationRepository.findByBuyerSeqAndIdentificationType(buyerSeq, "M");
-        return buyerIdentificationList;
-    }
-
-    public void joinBuyer(BuyerIdentificationDto buyerIdentificationDto){
+    public void joinBuyer(BuyerIdentificationDto buyerIdentificationDto) {
         Long buyerSeq = this.addBuyer(buyerIdentificationDto.getBuyer());
-        buyerIdentificationDto.setBuyer(BuyerDto.builder().seq(buyerSeq).build());
-        buyerSubService.addBuyerIdentification(buyerIdentificationDto);
+        buyerIdentificationDto.setBuyer(BuyerDto.createDto().seq(buyerSeq).build());
+        buyerSubService.addBuyerIdentification(buyerIdentificationDto, IdentificationTypeEnum.MAIN.getCode());
+    }
+
+    public BuyerIdentificationDto getBuyerInfo(Long buyerSeq) {
+        BuyerIdentification buyerIdentification = buyerIdentificationRepository.findByBuyerSeqAndIdentificationType(buyerSeq, IdentificationTypeEnum.MAIN.getCode());
+        return BuyerIdentificationDto.entityByDto().buyerIdentification(buyerIdentification).ite(IdentificationTypeEnum.MAIN).build();
+    }
+
+    public void modifyBuyer(Long buyerSeq, BuyerIdentificationDto buyerIdentificationDto) {
+        BuyerIdentification getBuyerIdentification =
+                Optional.ofNullable(buyerIdentificationRepository.findByBuyerSeqAndIdentificationType(buyerSeq, IdentificationTypeEnum.MAIN.getCode()))
+                        .orElseThrow(() -> new RuntimeException("modifyBuyer findByBuyerSeqAndIdentificationType null"));
+
+        BuyerIdentificationDto biDto = BuyerIdentificationDto.entityByDto().buyerIdentification(getBuyerIdentification).build();
+
+        buyerIdentificationRepository.save(biDto.updateEntity(buyerIdentificationDto));
     }
 
 

@@ -1,9 +1,11 @@
 package com.blue.mediuser.buyer.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,13 +14,14 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @NoArgsConstructor
+@DynamicUpdate
 @Table(name = "BUYER_IDENTIFICATION")
 public class BuyerIdentification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seq;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BUYER_SEQ", nullable = false)
     private Buyer buyer;
     private String buyerIdentificationCode;
@@ -51,4 +54,5 @@ public class BuyerIdentification {
         this.createdDatetime = createdDatetime;
         this.modifiedDatetime = modifiedDatetime;
     }
+
 }
