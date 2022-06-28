@@ -23,26 +23,11 @@ public class BuyerController {
     }
 
 
-    // 메인 계정 - 회원 가입.
+    // 메인 계정 - 회원 가입 신청.
     @PostMapping
     public ResponseEntity<ApiResponse> addMainBuyer(@RequestBody BuyerIdentificationDto buyerIdentificationDto) {
         log.info("addMainBuyer : {}", buyerIdentificationDto);
         buyerService.joinBuyer(buyerIdentificationDto);
-        return ResponseEntity.ok(ApiResponse.success());
-    }
-
-    // 메인 계정 - 정보 단건 조회.
-    @GetMapping("/{buyerSeq}")
-    public ResponseEntity<ApiResponse> getBuyer(@PathVariable Long buyerSeq) {
-        log.info("getBuyer : {}", buyerSeq);
-        return ResponseEntity.ok(ApiResponse.success(buyerService.getBuyerInfo(buyerSeq)));
-    }
-
-    // 메인 계정 - 정보 수정.
-    @PatchMapping("/{buyerSeq}")
-    public ResponseEntity<ApiResponse> modifyBuyer(@PathVariable Long buyerSeq, @RequestBody BuyerIdentificationDto buyerIdentificationDto) {
-        log.info("getBuyer : {}, {}", buyerSeq, buyerIdentificationDto);
-        buyerService.modifyBuyer(buyerSeq, buyerIdentificationDto);
         return ResponseEntity.ok(ApiResponse.success());
     }
 

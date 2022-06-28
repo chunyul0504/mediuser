@@ -6,10 +6,7 @@ import com.blue.mediuser.common.constants.IdentificationTypeEnum;
 import com.blue.mediuser.common.constants.UserTypeConstants;
 import com.blue.mediuser.common.util.DateFormatUtils;
 import com.blue.mediuser.common.util.TestSession;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -34,7 +31,10 @@ public class BuyerIdentificationDto {
     private LocalDateTime createdDatetime;
     private LocalDateTime modifiedDatetime;
 
-    @Builder(builderClassName = "createDto", builderMethodName = "createDto")
+    public BuyerIdentificationDto(){
+    }
+
+    @Builder(builderClassName = "byCreate", builderMethodName = "byCreate")
     public BuyerIdentificationDto(Long seq, BuyerDto buyer, String buyerIdentificationCode, String identificationType, String id, String password, String staffName, String staffTelNo, String staffPhoneNo, String staffEmail, String createdId, String modifiedId, LocalDateTime createdDatetime, LocalDateTime modifiedDatetime) {
         this.seq = seq;
         this.buyer = buyer;
@@ -52,22 +52,42 @@ public class BuyerIdentificationDto {
         this.modifiedDatetime = modifiedDatetime;
     }
 
-    @Builder(builderClassName = "entityByDto", builderMethodName = "entityByDto")
-    public BuyerIdentificationDto(BuyerIdentification buyerIdentification, IdentificationTypeEnum ite) {
+    @Builder(builderClassName = "byEntity", builderMethodName = "byEntity")
+    public BuyerIdentificationDto(BuyerIdentification buyerIdentification) {
         this.seq = buyerIdentification.getSeq();
+        this.buyer = BuyerDto.byEntity().buyer(buyerIdentification.getBuyer()).build();
         this.buyerIdentificationCode = buyerIdentification.getBuyerIdentificationCode();
         this.identificationType = buyerIdentification.getIdentificationType();
         this.id = buyerIdentification.getId();
-        this.password = buyerIdentification.getPassword(); // TODO. 이거 나중에 빼야함.
+        this.password = buyerIdentification.getPassword();
         this.staffName = buyerIdentification.getStaffName();
         this.staffTelNo = buyerIdentification.getStaffTelNo();
         this.staffPhoneNo = buyerIdentification.getStaffPhoneNo();
+        this.staffEmail = buyerIdentification.getStaffEmail();
         this.createdId = buyerIdentification.getCreatedId();
+        this.modifiedId = buyerIdentification.getModifiedId();
         this.createdDatetime = buyerIdentification.getCreatedDatetime();
-        if(Objects.equals(IdentificationTypeEnum.MAIN.getCode(), ite.getCode())){
-            this.buyer = BuyerDto.entityByDto().buyer(buyerIdentification.getBuyer()).build();
-        }
+        this.modifiedDatetime = buyerIdentification.getModifiedDatetime();
     }
+
+    @Builder(builderClassName = "selectByEntity", builderMethodName = "selectByEntity")
+    public BuyerIdentificationDto(BuyerIdentification buyerIdentification, Buyer buyer) {
+        this.seq = buyerIdentification.getSeq();
+        this.buyer = BuyerDto.byEntity().buyer(buyer).build();
+        this.buyerIdentificationCode = buyerIdentification.getBuyerIdentificationCode();
+        this.identificationType = buyerIdentification.getIdentificationType();
+        this.id = buyerIdentification.getId();
+        this.password = buyerIdentification.getPassword();
+        this.staffName = buyerIdentification.getStaffName();
+        this.staffTelNo = buyerIdentification.getStaffTelNo();
+        this.staffPhoneNo = buyerIdentification.getStaffPhoneNo();
+        this.staffEmail = buyerIdentification.getStaffEmail();
+        this.createdId = buyerIdentification.getCreatedId();
+        this.modifiedId = buyerIdentification.getModifiedId();
+        this.createdDatetime = buyerIdentification.getCreatedDatetime();
+        this.modifiedDatetime = buyerIdentification.getModifiedDatetime();
+    }
+
 
     public BuyerIdentification insertEntity(String identificationType) {
         return BuyerIdentification
@@ -90,7 +110,7 @@ public class BuyerIdentificationDto {
         return BuyerIdentification
                 .builder()
                 .seq(this.seq)
-                .buyer(this.buyer.updateEntity(biDtoParam.getBuyer()))
+                .buyer(this.buyer.updateEntity(biDtoParam.getBuyer(), "M"))
                 .buyerIdentificationCode(this.buyerIdentificationCode)
                 .identificationType(this.identificationType) // TODO. 코드타입 상수 M: 메인 계정, P: 부계정
                 .id(this.id)

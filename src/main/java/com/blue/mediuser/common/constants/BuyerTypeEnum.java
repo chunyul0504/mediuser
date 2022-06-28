@@ -17,5 +17,13 @@ public enum BuyerTypeEnum {
         this.description = description;
     }
 
+    public static boolean existsCode(String buyerType) {
+        for (BuyerTypeEnum buyerTypeEnum : BuyerTypeEnum.values()) {
+            if (buyerTypeEnum.code.equals(buyerType)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

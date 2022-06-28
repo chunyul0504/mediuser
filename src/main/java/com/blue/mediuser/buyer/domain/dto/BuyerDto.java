@@ -34,7 +34,10 @@ public class BuyerDto {
     private LocalDateTime createdDatetime;
     private LocalDateTime modifiedDatetime;
 
-    @Builder(builderClassName = "createDto", builderMethodName = "createDto")
+    public BuyerDto(){
+    }
+
+    @Builder(builderClassName = "byCreate", builderMethodName = "byCreate")
     public BuyerDto(Long seq, String buyerCode, String buyerType, String buyerState, String corpTelNo, String corpPhoneNo, String corpEmail, String corpName, String corpAddress, String corpShippingAddress, String businessRegistrationPath, String buyerTypeFilePath, String ci, String createdId, String modifiedId, LocalDateTime createdDatetime, LocalDateTime modifiedDatetime) {
         this.seq = seq;
         this.buyerCode = buyerCode;
@@ -55,8 +58,8 @@ public class BuyerDto {
         this.modifiedDatetime = modifiedDatetime;
     }
 
-    @Builder(builderClassName = "entityByDto", builderMethodName = "entityByDto")
-    public BuyerDto(Buyer buyer){
+    @Builder(builderClassName = "byEntity", builderMethodName = "byEntity")
+    public BuyerDto(Buyer buyer) {
         this.seq = buyer.getSeq();
         this.buyerCode = buyer.getBuyerCode();
         this.buyerType = buyer.getBuyerType();
@@ -76,13 +79,13 @@ public class BuyerDto {
         this.modifiedDatetime = buyer.getModifiedDatetime();
     }
 
-    public Buyer updateEntity(BuyerDto buyerParam){
+    public Buyer updateEntity(BuyerDto buyerParam, String buyerState){
         return Buyer
                 .builder()
                 .seq(this.seq)
                 .buyerCode(this.buyerCode)
                 .buyerType(this.buyerType)
-                .buyerState("M") // TODO. 코드타입 상수 R: 가입승인대기, M: 정보변경승인대기, D: 승인완료
+                .buyerState(buyerState)
                 .corpTelNo(buyerParam.getCorpTelNo())
                 .corpPhoneNo(buyerParam.getCorpPhoneNo())
                 .corpEmail(buyerParam.getCorpEmail())

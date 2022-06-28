@@ -29,18 +29,5 @@ public class BuyerSubController {
         buyerSubService.addBuyerIdentification(buyerIdentificationDto, IdentificationTypeEnum.SUB.getCode());
         return ResponseEntity.ok(ApiResponse.success());
     }
-    @GetMapping("/{buyerSeq}")
-    public ResponseEntity<ApiResponse> getSubBuyer(@PathVariable Long buyerSeq){
-        log.info("getSubBuyer : {}", buyerSeq);
-        List<BuyerIdentificationDto> buyerIdentificationDtoList = buyerSubService.getSubBuyerList(buyerSeq);
-        return ResponseEntity.ok(ApiResponse.success(new ApiListResponse(buyerIdentificationDtoList, buyerIdentificationDtoList.size())));
-    }
-
-    @GetMapping("/{buyerIdentificationSeq}")
-    public ResponseEntity<ApiResponse> modifySubBuyerState(@PathVariable Long buyerIdentificationSeq, @RequestParam String state){
-        log.info("getSubBuyer : {}, {}", buyerIdentificationSeq, state);
-        buyerSubService.modifySubBuyer(buyerIdentificationSeq, state);
-        return ResponseEntity.ok(ApiResponse.success());
-    }
 
 }

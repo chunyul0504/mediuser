@@ -26,22 +26,4 @@ public class BuyerSubService {
         buyerIdentificationRepository.save(buyerIdentificationDto.insertEntity(identificationType));
     }
 
-    public List<BuyerIdentificationDto> getSubBuyerList(Long buyerSeq){
-        List<BuyerIdentification> buyerIdentificationList = buyerIdentificationRepository.findAllByBuyerSeqOrderBySeqDesc(buyerSeq);
-        return buyerIdentificationList.stream().map(
-                list -> BuyerIdentificationDto
-                        .entityByDto()
-                        .buyerIdentification(list)
-                        .ite(IdentificationTypeEnum.SUB)
-                        .build())
-                .collect(Collectors.toList());
-    }
-
-    public void modifySubBuyer(Long buyerIdentificationSeq, String state){
-        BuyerIdentification buyerIdentification = buyerIdentificationRepository.findById(buyerIdentificationSeq).orElseThrow(() -> new RuntimeException("modifySubBuyer findById null"));
-        BuyerIdentificationDto bid = BuyerIdentificationDto.entityByDto().buyerIdentification(buyerIdentification).ite(IdentificationTypeEnum.SUB).build();
-        bid.modifyStateEntity();
-    }
-
-
 }
