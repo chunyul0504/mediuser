@@ -1,15 +1,11 @@
 package com.blue.mediuser.buyer.sub;
 
-import com.blue.mediuser.buyer.BuyerService;
 import com.blue.mediuser.buyer.domain.dto.BuyerIdentificationDto;
 import com.blue.mediuser.common.constants.IdentificationTypeEnum;
-import com.blue.mediuser.common.util.ApiListResponse;
 import com.blue.mediuser.common.util.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RestController

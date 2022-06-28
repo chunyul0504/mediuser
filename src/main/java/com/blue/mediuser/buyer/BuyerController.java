@@ -1,8 +1,6 @@
 package com.blue.mediuser.buyer;
 
-import com.blue.mediuser.buyer.domain.dto.BuyerDto;
 import com.blue.mediuser.buyer.domain.dto.BuyerIdentificationDto;
-import com.blue.mediuser.common.constants.IdentificationTypeEnum;
 import com.blue.mediuser.common.util.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

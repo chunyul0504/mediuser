@@ -1,9 +1,7 @@
 package com.blue.mediuser.buyer.admin;
 
 import com.blue.mediuser.buyer.BuyerService;
-import com.blue.mediuser.buyer.domain.dto.BuyerDto;
 import com.blue.mediuser.buyer.domain.dto.BuyerIdentificationDto;
-import com.blue.mediuser.buyer.domain.entity.BuyerIdentification;
 import com.blue.mediuser.common.util.ApiListResponse;
 import com.blue.mediuser.common.util.ApiResponse;
 import lombok.extern.slf4j.Slf4j;

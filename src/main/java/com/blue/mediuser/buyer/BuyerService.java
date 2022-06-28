@@ -1,10 +1,10 @@
 package com.blue.mediuser.buyer;
 
+import com.blue.mediuser.buyer.domain.repository.BuyerRepositorySupport;
 import com.blue.mediuser.buyer.domain.dto.BuyerDto;
 import com.blue.mediuser.buyer.domain.dto.BuyerIdentificationDto;
 import com.blue.mediuser.buyer.domain.entity.Buyer;
 import com.blue.mediuser.buyer.domain.repository.BuyerRepository;
-import com.blue.mediuser.buyer.domain.repository.BuyerRepositorySupport;
 import com.blue.mediuser.buyer.sub.BuyerSubService;
 import com.blue.mediuser.common.constants.IdentificationTypeEnum;
 import lombok.extern.slf4j.Slf4j;

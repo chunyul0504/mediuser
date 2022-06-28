@@ -1,6 +1,5 @@
 package com.blue.mediuser.buyer.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

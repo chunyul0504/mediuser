@@ -1,15 +1,13 @@
 package com.blue.mediuser.buyer.domain.dto;
 
-import com.blue.mediuser.buyer.domain.entity.Buyer;
 import com.blue.mediuser.buyer.domain.entity.BuyerIdentification;
-import com.blue.mediuser.common.constants.IdentificationTypeEnum;
+import com.blue.mediuser.buyer.domain.entity.Buyer;
 import com.blue.mediuser.common.constants.UserTypeConstants;
 import com.blue.mediuser.common.util.DateFormatUtils;
 import com.blue.mediuser.common.util.TestSession;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Getter
 @Setter
